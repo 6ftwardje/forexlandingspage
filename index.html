@@ -360,6 +360,7 @@
       padding: 1rem 2rem;
       background: #1a1a1a;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
     }
 
     .nav-logo {
@@ -405,35 +406,65 @@
       color: #e0e0e0;
       font-size: 1.5rem;
       cursor: pointer;
-      padding: 0.5rem;
+      padding: 0;
+      z-index: 100;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      line-height: 1;
+      margin-left: auto;
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
     }
 
     @media (max-width: 768px) {
       .nav-menu {
         display: none;
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: 0;
         left: 0;
         right: 0;
-        background: #1a1a1a;
+        bottom: 0;
+        background: rgba(26, 26, 26, 0.98);
         flex-direction: column;
-        padding: 1rem;
-        gap: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        gap: 2rem;
+        margin: 0;
+        z-index: 90;
+        backdrop-filter: blur(5px);
       }
 
       .nav-menu.active {
         display: flex;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
 
       .mobile-menu-btn {
-        display: block;
+        display: flex;
       }
 
       .nav-link {
-        width: 100%;
+        width: auto;
         text-align: center;
-        padding: 1rem;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        background: rgba(255, 152, 0, 0.1);
       }
     }
   </style>
@@ -570,15 +601,28 @@
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
 
-    mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       navMenu.classList.toggle('active');
+      mobileMenuBtn.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
     });
 
-    // Close menu when clicking outside
+    navMenu.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        mobileMenuBtn.textContent = '☰';
+      });
+    });
+
     document.addEventListener('click', (e) => {
       if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
         navMenu.classList.remove('active');
+        mobileMenuBtn.textContent = '☰';
       }
+    });
+
+    navMenu.addEventListener('click', (e) => {
+      e.stopPropagation();
     });
   </script>
 </body>
