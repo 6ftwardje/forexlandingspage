@@ -351,10 +351,106 @@
         padding: 0 1.5rem;
       }
     }
+
+    /* Navigation Styles */
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: #1a1a1a;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo img {
+      width: 80px;
+      height: auto;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .nav-link {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #ff9800;
+      background: rgba(255, 152, 0, 0.1);
+    }
+
+    .nav-link.active {
+      color: #ff9800;
+      background: rgba(255, 152, 0, 0.1);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #e0e0e0;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #1a1a1a;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
- 
+  <nav class="nav-container">
+    <div class="nav-logo">
+      <a href="https://cryptoriez.be" target="_blank">
+        <img src="logo_transparent.png" alt="Cryptoriez logo">
+      </a>
+    </div>
+    <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+    <div class="nav-menu">
+      <a href="https://cryptopdfdownload.netlify.app/" class="nav-link">Crypto PDF</a>
+      <a href="index.html" class="nav-link active">Forex PDF</a>
+    </div>
+  </nav>
 
   <main>
     <h1>Ontgrendel 8 Jaar aan Forex Expertise in Eén Gratis PDF</h1>
@@ -468,6 +564,21 @@
         alert("Er ging iets mis. Probeer later opnieuw.");
         console.error(error);
       });
+    });
+
+    // Mobile menu functionality
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        navMenu.classList.remove('active');
+      }
     });
   </script>
 </body>
