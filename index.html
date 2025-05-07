@@ -494,6 +494,7 @@
       <label for="email">E-mailadres</label>
       <input type="email" name="email" id="email" placeholder="Jouw e-mailadres" required />
       <div id="emailError" class="error">⚠️ Geef een geldig e-mailadres in</div>
+      <input type="hidden" name="pdf_type" value="forex" />
       <button type="submit">📥 Ontgrendel de PDF</button>
     </form>
     <div id="thankyou">
@@ -582,7 +583,11 @@
       }
       if (!valid) return;
       const data = new FormData(form);
-      fetch('https://script.google.com/macros/s/AKfycbxIHff4rVw_Fz__y7FIVwjxahDyYR0XY3VupR8mgzXz4vKC6xnCmhxJZLgxhwyI5OCuow/exec', {
+      // Log all form data to the console
+      for (let pair of data.entries()) {
+        console.log(pair[0]+ ': ' + pair[1]);
+      }
+      fetch('https://script.google.com/macros/s/AKfycbxmix3B6bGNQVkfGvAUcCfv5EAcB3VsngOi-nPzlhZAaIQc_-K6ST-vdwJ1z0QEuWuX/exec', {
         method: 'POST',
         body: data
       })
